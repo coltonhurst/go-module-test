@@ -2,8 +2,6 @@ package sdk
 
 import (
 	"encoding/json"
-
-	"github.com/coltonhurst/go-module-test/internal/cinterface"
 )
 
 type CommandRunnerInterface interface {
@@ -11,11 +9,11 @@ type CommandRunnerInterface interface {
 }
 
 type CommandRunner struct {
-	client cinterface.ClientPointer
-	lib    cinterface.BitwardenLibrary
+	client clientPointer
+	lib    bitwardenLibrary
 }
 
-func NewCommandRunner(client cinterface.ClientPointer, lib cinterface.BitwardenLibrary) *CommandRunner {
+func NewCommandRunner(client clientPointer, lib bitwardenLibrary) *CommandRunner {
 	return &CommandRunner{
 		client: client,
 		lib:    lib,
@@ -28,7 +26,7 @@ func (c *CommandRunner) RunCommand(command Command) (string, error) {
 		return "", err
 	}
 
-	responseStr, err := c.lib.RunCommand(string(commandJSON), c.client)
+	responseStr, err := c.lib.runCommand(string(commandJSON), c.client)
 	if err != nil {
 		return "", err
 	}

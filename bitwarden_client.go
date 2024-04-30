@@ -2,13 +2,11 @@ package sdk
 
 import (
 	"encoding/json"
-
-	"github.com/coltonhurst/go-module-test/internal/cinterface"
 )
 
 type BitwardenClient struct {
-	client        cinterface.ClientPointer
-	lib           cinterface.BitwardenLibrary
+	client        clientPointer
+	lib           bitwardenLibrary
 	commandRunner CommandRunnerInterface
 	Projects      ProjectsInterface
 	Secrets       SecretsInterface
@@ -29,8 +27,8 @@ func NewBitwardenClient(apiURL *string, identityURL *string) (*BitwardenClient, 
 		return nil, err
 	}
 
-	lib := cinterface.NewBitwardenLibrary()
-	client, err := lib.Init(string(settingsJSON))
+	lib := newBitwardenLibrary()
+	client, err := lib.init(string(settingsJSON))
 	if err != nil {
 		return nil, err
 	}
@@ -59,5 +57,5 @@ func (c *BitwardenClient) AccessTokenLogin(accessToken string, statePath *string
 }
 
 func (c *BitwardenClient) Close() {
-	c.lib.FreeMem(c.client)
+	c.lib.freeMem(c.client)
 }

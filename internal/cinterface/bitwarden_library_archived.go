@@ -1,4 +1,4 @@
-package cinterface
+package cinterfacearchived
 
 import (
 	"fmt"
